@@ -28,3 +28,11 @@ def get_highest_home_score():
 
 def get_highest_away_score():
     return int(current_df["away_score"].max())
+
+def get_team_with_most_wins():
+   home_wins = current_df[current_df["home_score"] > current_df["away_score"]]["home_team"]
+   away_wins = current_df[current_df["away_score"] > current_df["home_score"]]["away_team"]
+
+   all_wins = pd.concat([home_wins, away_wins])
+
+   return all_wins.value_counts().idxmax()
