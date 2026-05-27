@@ -8,7 +8,8 @@ from app.data_manager import (
     get_most_common_tournament,
     get_highest_home_score,
     get_highest_away_score,
-    get_team_with_most_wins
+    get_team_with_most_wins,
+    get_team_with_most_goals
 )
 
 app = FastAPI()
@@ -42,5 +43,6 @@ def get_stats():
     "most_common_tournament": get_most_common_tournament(),
     "highest_home_score": get_highest_home_score(),
     "highest_away_score": get_highest_away_score(),
-    "team_with_most_wins": get_team_with_most_wins()
+    "team_with_most_wins": get_team_with_most_wins(),
+    "team_with_most_goals": get_team_with_most_goals()
   }

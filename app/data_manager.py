@@ -36,3 +36,16 @@ def get_team_with_most_wins():
    all_wins = pd.concat([home_wins, away_wins])
 
    return all_wins.value_counts().idxmax()
+
+def get_team_with_most_goals():
+   home_goals = current_df.groupby("home_team")["home_score"].sum()
+   away_goals = current_df.groupby("away_team")["away_score"].sum()
+
+   total_goals = home_goals.add(away_goals, fill_value=0)
+
+   top_team = total_goals.idxmax()
+
+   return {
+      "team": top_team,
+      "goals": int(total_goals.max()) 
+   }
