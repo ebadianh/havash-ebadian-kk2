@@ -29,6 +29,6 @@ def get_stats():
   if current_df is None:
     return {"error": "No dataset uploaded"}
   
-  stats = current_df.describe(include="all")
-
-  return stats.fillna("").to_dict()
+  return {
+    "total_matches": len(current_df)
+  }
