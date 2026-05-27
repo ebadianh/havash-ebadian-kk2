@@ -1,9 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
 import pandas as pd
+from app.data_manager import set_dataframe, get_dataframe
 
 app = FastAPI()
-
-current_df = None
 
 @app.get("/health")
 def health():
@@ -11,11 +10,10 @@ def health():
 
 @app.post("/data/upload")
 async def upload_data(file: UploadFile = File(...)):
-  global current_df
 
   df = pd.read_csv(file.file)
 
-  current_df = df
+  set_dataframe(df)
 
   return {
     "rows": len(df),
@@ -24,11 +22,18 @@ async def upload_data(file: UploadFile = File(...)):
 
 @app.get("/data/stats")
 def get_stats():
-  global current_df
+  current_df = get_dataframe()
 
   if current_df is None:
     return {"error": "No dataset uploaded"}
   
   return {
-    "total_matches": len(current_df)
+    "total_matches": len(current_df),
+
+    "unique_teams": len(
+      pd.concat([
+        current_df["home_team"],
+        current_df["away_team"]
+      ]).unique()
+    )
   }
