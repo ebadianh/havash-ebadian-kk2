@@ -1,6 +1,14 @@
 from fastapi import FastAPI, UploadFile, File
 import pandas as pd
-from app.data_manager import set_dataframe, get_dataframe
+from app.data_manager import (
+    set_dataframe,
+    get_dataframe,
+    get_total_matches,
+    get_unique_teams,
+    get_most_common_tournament,
+    get_highest_home_score,
+    get_highest_away_score
+)
 
 app = FastAPI()
 
@@ -28,12 +36,9 @@ def get_stats():
     return {"error": "No dataset uploaded"}
   
   return {
-    "total_matches": len(current_df),
-
-    "unique_teams": len(
-      pd.concat([
-        current_df["home_team"],
-        current_df["away_team"]
-      ]).unique()
-    )
+    "total_matches": get_total_matches(),
+    "unique_teams": get_unique_teams(),
+    "most_common_tournament": get_most_common_tournament(),
+    "highest_home_score": get_highest_home_score(),
+    "highest_away_score": get_highest_away_score() 
   }
