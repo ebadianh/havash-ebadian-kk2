@@ -78,7 +78,6 @@ def get_team_with_highest_win_percentage():
    }
 
 def get_tournament_with_highest_average_goals():
-   
    goals_per_match = (
       current_df["home_score"]
       + current_df["away_score"]
@@ -94,4 +93,19 @@ def get_tournament_with_highest_average_goals():
       "tournament": top_tournament,
       "average_goals": round(
          float(tournament_average_goals.max()), 2)
+   }
+
+def get_team_with_most_draws():
+   draw_matches = current_df[
+    current_df["home_score"] == current_df["away_score"]
+]
+   home_draws = draw_matches["home_team"].value_counts()
+   away_draws = draw_matches["away_team"].value_counts()
+   total_draws = home_draws.add(away_draws, fill_value=0)
+
+   top_team = total_draws.idxmax()
+
+   return {
+      "team": top_team,
+      "draws": int(total_draws.max())
    }
