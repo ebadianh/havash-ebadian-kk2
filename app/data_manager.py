@@ -54,6 +54,7 @@ def get_team_with_highest_win_percentage():
    home_matches = current_df["home_team"].value_counts()
    away_matches = current_df["away_team"].value_counts()
    total_matches = home_matches.add(away_matches, fill_value=0)
+   eligible_teams = total_matches[total_matches >= 300]
 
    home_wins = current_df[
       current_df["home_score"] > current_df["away_score"]
@@ -65,7 +66,9 @@ def get_team_with_highest_win_percentage():
    
    total_wins = home_wins.add(away_wins, fill_value=0)
 
-   win_percentage = (total_wins / total_matches) * 100
+   win_percentage = (
+      total_wins[eligible_teams.index] / eligible_teams
+   ) * 100
 
    top_team = win_percentage.idxmax()
 
