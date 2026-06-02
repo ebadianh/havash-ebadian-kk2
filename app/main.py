@@ -63,6 +63,12 @@ def query(question: str):
   if question == "Vilket lag har flest vinster?":
     return get_team_with_most_wins()
   
+  if question == "Vilket lag har gjort flest mål?":
+    return get_team_with_most_goals()
+  
+  if question == "Vilket lag har flest oavgjorda matcher?":
+    return get_team_with_most_draws()
+  
   return {
     "message": "Frågan känns inte igen"
   }
