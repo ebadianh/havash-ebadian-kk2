@@ -47,5 +47,5 @@ def get_team_with_most_goals():
 
    return {
       "team": top_team,
-      "goals": int(total_goals.max()) 
+      "goals": int(total_goals.max())
    }
