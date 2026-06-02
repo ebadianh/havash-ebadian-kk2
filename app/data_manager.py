@@ -49,3 +49,27 @@ def get_team_with_most_goals():
       "team": top_team,
       "goals": int(total_goals.max())
    }
+
+def get_team_with_highest_win_percentage():
+   home_matches = current_df["home_team"].value_counts()
+   away_matches = current_df["away_team"].value_counts()
+   total_matches = home_matches.add(away_matches, fill_value=0)
+
+   home_wins = current_df[
+      current_df["home_score"] > current_df["away_score"]
+      ]["home_team"].value_counts()
+
+   away_wins = current_df[
+      current_df["away_score"] > current_df["home_score"]
+      ]["away_team"].value_counts()
+   
+   total_wins = home_wins.add(away_wins, fill_value=0)
+
+   win_percentage = (total_wins / total_matches) * 100
+
+   top_team = win_percentage.idxmax()
+
+   return {
+      "team": top_team,
+      "win_percentage": round(float(win_percentage.max()), 2)
+   }

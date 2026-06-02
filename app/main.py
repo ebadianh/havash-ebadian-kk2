@@ -9,7 +9,8 @@ from app.data_manager import (
     get_highest_home_score,
     get_highest_away_score,
     get_team_with_most_wins,
-    get_team_with_most_goals
+    get_team_with_most_goals,
+    get_team_with_highest_win_percentage
 )
 
 app = FastAPI()
@@ -44,5 +45,6 @@ def get_stats():
     "highest_home_score": get_highest_home_score(),
     "highest_away_score": get_highest_away_score(),
     "team_with_most_wins": get_team_with_most_wins(),
-    "team_with_most_goals": get_team_with_most_goals()
+    "team_with_most_goals": get_team_with_most_goals(),
+    "team_with_highest_win_percentage": get_team_with_highest_win_percentage()
   }
