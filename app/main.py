@@ -58,7 +58,7 @@ def get_stats():
   }
 
 @app.post("/query")
-def query():
+def query(question: str):
   return {
-    "message": "Query endpoint works"
+    "question": question
   }
