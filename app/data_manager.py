@@ -18,10 +18,10 @@ def get_unique_teams():
         current_df["home_team"],
         current_df["away_team"]
       ]).unique()
-    ),
+    )
 
 def get_most_common_tournament():
-  return current_df["tournament"].mode(0)
+  return current_df["tournament"].mode()[0]
 
 def get_highest_home_score():
     return int(current_df["home_score"].max())

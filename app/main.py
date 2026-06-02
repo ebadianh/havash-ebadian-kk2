@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 import pandas as pd
+from app.query_handler import handle_question
 from app.data_manager import (
     set_dataframe,
     get_dataframe,
@@ -59,16 +60,4 @@ def get_stats():
 
 @app.post("/query")
 def query(question: str):
-  
-  if "vinster" in question.lower():
-    return get_team_with_most_wins()
-  
-  if question == "Vilket lag har gjort flest mål?":
-    return get_team_with_most_goals()
-  
-  if question == "Vilket lag har flest oavgjorda matcher?":
-    return get_team_with_most_draws()
-  
-  return {
-    "message": "Frågan känns inte igen"
-  }
+  return handle_question(question)
