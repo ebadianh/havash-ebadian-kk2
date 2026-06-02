@@ -60,7 +60,7 @@ def get_stats():
 @app.post("/query")
 def query(question: str):
   
-  if "vinster" in question.lower() == "Vilket lag har flest vinster?":
+  if "vinster" in question.lower():
     return get_team_with_most_wins()
   
   if question == "Vilket lag har gjort flest mål?":
