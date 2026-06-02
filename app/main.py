@@ -56,3 +56,9 @@ def get_stats():
     "team_with_highest_average_goals": get_team_with_highest_average_goals(),
     "year_with_most_played_matches": get_year_with_most_played_matches()
   }
+
+@app.post("/query")
+def query():
+  return {
+    "message": "Query endpoint works"
+  }
