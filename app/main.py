@@ -10,7 +10,8 @@ from app.data_manager import (
     get_highest_away_score,
     get_team_with_most_wins,
     get_team_with_most_goals,
-    get_team_with_highest_win_percentage
+    get_team_with_highest_win_percentage,
+    get_tournament_with_highest_average_goals
 )
 
 app = FastAPI()
@@ -46,5 +47,6 @@ def get_stats():
     "highest_away_score": get_highest_away_score(),
     "team_with_most_wins": get_team_with_most_wins(),
     "team_with_most_goals": get_team_with_most_goals(),
-    "team_with_highest_win_percentage": get_team_with_highest_win_percentage()
+    "team_with_highest_win_percentage": get_team_with_highest_win_percentage(),
+    "tournament_with_highest_average_goals": get_tournament_with_highest_average_goals()
   }

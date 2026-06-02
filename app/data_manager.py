@@ -76,3 +76,22 @@ def get_team_with_highest_win_percentage():
       "team": top_team,
       "win_percentage": round(float(win_percentage.max()), 2)
    }
+
+def get_tournament_with_highest_average_goals():
+   
+   goals_per_match = (
+      current_df["home_score"]
+      + current_df["away_score"]
+   )
+
+   tournament_average_goals = goals_per_match.groupby(
+      current_df["tournament"]
+   ).mean()
+
+   top_tournament = tournament_average_goals.idxmax()
+
+   return {
+      "tournament": top_tournament,
+      "average_goals": round(
+         float(tournament_average_goals.max()), 2)
+   }
