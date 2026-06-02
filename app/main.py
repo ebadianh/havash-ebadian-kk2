@@ -12,7 +12,8 @@ from app.data_manager import (
     get_team_with_most_goals,
     get_team_with_highest_win_percentage,
     get_tournament_with_highest_average_goals,
-    get_team_with_most_draws
+    get_team_with_most_draws,
+    get_team_with_highest_average_goals
 )
 
 app = FastAPI()
@@ -50,5 +51,6 @@ def get_stats():
     "team_with_most_goals": get_team_with_most_goals(),
     "team_with_highest_win_percentage": get_team_with_highest_win_percentage(),
     "tournament_with_highest_average_goals": get_tournament_with_highest_average_goals(),
-    "team_with_most_draws": get_team_with_most_draws()
+    "team_with_most_draws": get_team_with_most_draws(),
+    "team_with_highest_average_goals": get_team_with_highest_average_goals()
   }

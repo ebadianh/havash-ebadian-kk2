@@ -109,3 +109,26 @@ def get_team_with_most_draws():
       "team": top_team,
       "draws": int(total_draws.max())
    }
+
+def get_team_with_highest_average_goals():
+
+    home_goals = current_df.groupby("home_team")["home_score"].sum()
+
+    away_goals = current_df.groupby("away_team")["away_score"].sum()
+
+    total_goals = home_goals.add(away_goals, fill_value=0)
+
+    home_matches = current_df["home_team"].value_counts()
+
+    away_matches = current_df["away_team"].value_counts()
+
+    total_matches = home_matches.add(away_matches, fill_value=0)
+
+    average_goals = total_goals / total_matches
+
+    top_team = average_goals.idxmax()
+
+    return {
+        "team": top_team,
+        "average_goals": round(float(average_goals.max()), 2)
+    }
