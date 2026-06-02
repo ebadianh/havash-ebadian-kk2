@@ -132,3 +132,18 @@ def get_team_with_highest_average_goals():
         "team": top_team,
         "average_goals": round(float(average_goals.max()), 2)
     }
+
+def get_year_with_most_played_matches():
+   
+   dates = pd.to_datetime(current_df["date"])
+   
+   years = dates.dt.year
+
+   matches_per_year = years.value_counts()
+
+   top_year = matches_per_year.idxmax()
+
+   return {
+      "year": int(top_year),
+      "matches": int(matches_per_year.max())
+   }
