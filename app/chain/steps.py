@@ -11,3 +11,7 @@ Användarens fråga:
 {input.question}
 
 """
+
+class LLMRunner(Runnable[str, str]):
+  def invoke(self, input: str) -> str:
+    return f"LLM received: {input}"
