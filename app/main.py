@@ -1,6 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
 import pandas as pd
 from app.query_handler import handle_question
+from app.chain.pipeline import oraklet
+from app.schemas import AskRequest
 from app.data_manager import (
     set_dataframe,
     get_dataframe,
@@ -61,3 +63,7 @@ def get_stats():
 @app.post("/query")
 def query(question: str):
   return handle_question(question)
+
+@app.post("/ai/ask")
+def ask(request: AskRequest):
+  return oraklet.invoke(request)
