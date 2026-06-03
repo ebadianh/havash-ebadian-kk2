@@ -1,21 +1,29 @@
 from app.chain.runnable import Runnable
 from app.schemas import AskRequest, AskResponse
 from transformers import pipeline
-from app.data_manager import get_total_matches
+from app.data_manager import (
+  get_total_matches,
+  get_team_with_most_wins
+)
 
 
 class PromptBuilder(Runnable[AskRequest, str]):
   def invoke(self, input: AskRequest) -> str:
       total_matches = get_total_matches()
+      most_wins = get_team_with_most_wins()
 
       return f"""
 Du är ett fotbollsorakel.
 
-Datasetet innehåller {total_matches} matcher.
+Använd endast informationen nedan!
 
+Fakta från datasetet:
+- Datasetet innehåller {total_matches} matcher.
+- Lag med flest vinster: {most_wins}.
+
+Svara kortfattat på användarens fråga:
 Användarens fråga:
 {input.question}
-
 """
 
 class LLMRunner(Runnable[str, str]):
