@@ -1,12 +1,17 @@
 from app.chain.runnable import Runnable
 from app.schemas import AskRequest, AskResponse
 from transformers import pipeline
+from app.data_manager import get_total_matches
+
 
 class PromptBuilder(Runnable[AskRequest, str]):
   def invoke(self, input: AskRequest) -> str:
+      total_matches = get_total_matches()
 
-    return f"""
+      return f"""
 Du är ett fotbollsorakel.
+
+Datasetet innehåller {total_matches} matcher.
 
 Användarens fråga:
 {input.question}
