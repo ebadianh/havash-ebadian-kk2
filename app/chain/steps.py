@@ -1,5 +1,9 @@
 from app.chain.runnable import Runnable
-from app.schemas import AskRequest, AskResponse
+from app.schemas import (
+  AskRequest,
+  AskResponse,
+  LLMResponse
+)
 from transformers import pipeline
 from app.data_manager import (
   get_total_matches,
@@ -26,25 +30,28 @@ Användarens fråga:
 {input.question}
 """
 
-class LLMRunner(Runnable[str, str]):
+class LLMRunner(Runnable[str, LLMResponse]):
   def __init__(self):
     self.model = pipeline(
       "text-generation",
       model="HuggingFaceTB/SmolLM2-135M-Instruct"
     )
-  def invoke(self, input: str) -> str:
+  def invoke(self, input: str) -> LLMResponse:
     result = self.model(
       input,
       max_new_tokens=100
     )
 
-    return result[0]["generated_text"]
+    return LLMResponse(
+      question=input,
+      answer=result[0]["generated_text"]
+    )
 
-class ResponseParser(Runnable[str, AskResponse]):
-  def invoke(self, input: str) -> AskResponse:
+class ResponseParser(Runnable[LLMResponse, AskResponse]):
+  def invoke(self, input: LLMResponse) -> AskResponse:
 
     return AskResponse(
-      question="Testfråga",
-      answer=input,
-      model="MockLLM"
+      question=input.question,
+      answer=input.answer,
+      model="HuggingFaceTB/SmolLM2-135M-Instruct"
     )

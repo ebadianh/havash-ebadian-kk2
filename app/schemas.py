@@ -7,3 +7,7 @@ class AskResponse(BaseModel):
   question: str
   answer: str
   model: str
+
+class LLMResponse(BaseModel):
+  question: str
+  answer: str
