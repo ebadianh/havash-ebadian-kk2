@@ -18,3 +18,16 @@ def test_stats_without_dataset():
   assert response.json() == {
     "error": "No dataset uploaded"
   }
+
+def test_ai_ask_endpoint():
+
+  set_dataframe(None)
+
+  response = client.post(
+    "/ai/ask",
+    json={
+      "question": "Vilket lag har flest vinster?"
+    }
+  )
+
+  assert response.status_code == 400

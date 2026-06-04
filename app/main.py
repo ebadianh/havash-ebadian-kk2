@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 import pandas as pd
 from app.query_handler import handle_question
 from app.chain.pipeline import oraklet
@@ -66,4 +66,9 @@ def query(question: str):
 
 @app.post("/ai/ask")
 def ask(request: AskRequest):
+  if get_dataframe() is None:
+    raise HTTPException(
+      status_code=400,
+      detail="No dataset uploaded"
+    )
   return oraklet.invoke(request)
