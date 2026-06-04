@@ -35,7 +35,11 @@ async def upload_data(file: UploadFile = File(...)):
 
   return {
     "rows": len(df),
-    "columns": list(df.columns)
+    "columns": list(df.columns),
+    "dtypes": {
+      col: str(dtype)
+      for col, dtype in df.dtypes.items()
+    }
   }
 
 @app.get("/data/stats")
