@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 from app.main import app
 from app.data_manager import set_dataframe
+from io import BytesIO
 
 client = TestClient(app)
 
@@ -31,3 +32,20 @@ def test_ai_ask_endpoint():
   )
 
   assert response.status_code == 400
+
+def test_upload_invalid_file():
+  response = client.post(
+    "/data/upload",
+    files={
+      "file": (
+        "text.txt",
+        BytesIO(b"Invalid file type."),
+        "text/plain"
+      )
+    }
+  )
+  
+  assert response.status_code == 400
+  assert response.json() == {
+    "detail": "Invalid CSV file."
+  }

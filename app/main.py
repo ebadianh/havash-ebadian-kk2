@@ -28,9 +28,22 @@ def health():
 
 @app.post("/data/upload")
 async def upload_data(file: UploadFile = File(...)):
+  
+  if not file.filename.endswith(".csv"):
+    raise HTTPException(
+      status_code=400,
+      detail="Invalid CSV file."
+    )
+  
+  try:
+    df = pd.read_csv(file.file)
 
-  df = pd.read_csv(file.file)
-
+  except Exception:
+      raise HTTPException(
+        status_code=400,
+        detail="Invalid CSV file."
+      )
+  
   set_dataframe(df)
 
   return {
@@ -41,6 +54,9 @@ async def upload_data(file: UploadFile = File(...)):
       for col, dtype in df.dtypes.items()
     }
   }
+
+
+
 
 @app.get("/data/stats")
 def get_stats():
