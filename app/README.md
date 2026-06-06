@@ -48,6 +48,11 @@ cd havash-ebadian-kk2
 Installera beroenden:
 pip install -r requirements.txt
 
+## Dataset
+Projektet använder ett dataset med internationella fotbollsmatcher från 1972 till 2026 som finns i:
+
+app/data/
+
 ## Starta applikationen
 uvicorn app.main:app --reload
 
